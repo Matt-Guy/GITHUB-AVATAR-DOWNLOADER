@@ -16,7 +16,11 @@ var options = {
   };
 
   request(options, function(err, res, body) {
-    cb(err, body);
+    if(err) {
+      cb(err)
+    } else {
+      cb(null, JSON.parse(body));
+    }
   });
 }
 
@@ -25,6 +29,14 @@ var options = {
 
 
 getRepoContributors("jquery", "jquery", function(err, result) {
-  console.log("Errors:", err);
-  console.log("Result:", result);
+  if (err) {
+    console.error("Request function failed");
+    return
+  }
+  for (let i = 0; i < result.length; i++ ) {
+      console.log(result[i].avatar_url)
+  }
+  //console.log("Errors:", err);
+  //console.log("Result:", result);
+  console.log()
 });
